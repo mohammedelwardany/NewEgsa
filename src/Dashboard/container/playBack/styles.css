@@ -1,0 +1,29 @@
+.ResultsContainer{
+    width: 640px; 
+    
+
+}
+
+.GetExecutedPlan{
+    width: 640px; 
+
+}
+
+@media only screen and (max-width: 600px) {
+    .ResultsContainer{
+        width: 320px; 
+    }
+  }
+  @media only screen and (max-width: 300px) {
+    .ResultsContainer{
+        width: 160px; 
+        background-color: antiquewhite;
+    }
+  }
+
+  @media only screen and (max-width: 1200px) {
+    .GetExecutedPlan{
+        width: 700px; 
+    
+    }
+  }

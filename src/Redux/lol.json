@@ -1,0 +1,71 @@
+[
+    {
+    // all general data
+    "planId":0,
+    "name": "mm",
+    "applicationUser": null,
+    "divces": 0,
+    "inputParamter": 0,
+    "dateTime": "2023-03-28T11:02:27.722Z",
+    "flagWatting": true,
+    "plan":[ 
+         //array of all plan data
+            {
+                "sequenceNumber": 0,
+                "delay": "string",
+                "repeat": "string",
+                "acknowledgeId": 0,
+                "subSystemId": 0,
+                "commandID": 0,
+                "subsystemName" : "",
+                "commendDescrption" : ""
+            },
+            {
+                "sequenceNumber": 1,
+                "delay": "string",
+                "repeat": "string",
+                "acknowledgeId": 0,
+                "subSystemId": 0,
+                "commandID": 0,
+                "subsystemName" : "",
+                "commendDescrption" : ""
+            }
+            ]
+    
+    },
+    {
+        "planId":1,
+        "name": "nn",
+        "applicationUser": null,
+        "divces": 0,
+        "inputParamter": 0,
+        "dateTime": "2023-03-28T11:02:27.722Z",
+        "flagWatting": true,
+        "plan":[ 
+                {
+                    "sequenceNumber": 0,
+                    "delay": "string",
+                    "repeat": "string",
+                    "acknowledgeId": 0,
+                    "subSystemId": 0,
+                    "commandID": 0,
+                    "subsystemName" : "",
+                    "commendDescrption" : ""
+                },
+                {
+                    "sequenceNumber": 1,
+                    "delay": "string",
+                    "repeat": "string",
+                    "acknowledgeId": 0,
+                    "subSystemId": 0,
+                    "commandID": 0,
+                    "subsystemName" : "",
+                    "commendDescrption" : ""
+                }
+                ]
+        
+        }
+
+
+
+]
