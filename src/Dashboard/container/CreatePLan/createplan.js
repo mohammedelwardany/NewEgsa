@@ -11,15 +11,21 @@ import PlanSetName from '../PlanSubsystem/planSetName';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetFixedPlannData, GetPlanData, GetPlannData } from '../../../Redux/PlanSlice';
 import { useEffect } from 'react';
+import CPModal from './planInits/modal';
+import FixedPlansPanel from '../PlanSubsystem/FixedPlanPanel';
+import CPAddModal from './addCommends/Addmodal';
 
 
 const CreatePlan = () => {
   const {allPlanData} = useSelector(state => state.plan)
   const {planName} = useSelector(state => state.plan)
   const {planDateTime} = useSelector(state => state.plan)
-  
+  // const [open, setOpen] = React.useState(false);
+
     const dispatch = useDispatch()
   useEffect(() => {
+    // setOpen(true)
+    // console.log(open)
     dispatch(GetPlannData());
     dispatch(GetFixedPlannData());
     
@@ -28,19 +34,29 @@ const CreatePlan = () => {
   
     return(<>
     <div>
-        <div style={{display:"flex",flexWrap:"wrap"}}>
-        <PlanSubsystem/>
+      <CPModal 
+      // openstate={open}
+      />
+      <CPAddModal/>
+          <div > 
+ 
+              {/* <PlanSubsystem/>
         <div>
         <Parameters/>
+        </div> */}
         <AcceptPlanSection/>
-        </div>
-        </div>
-        
+
         <PlanTable statusstate={"none"}
         dataSet={allPlanData}
         planName={planName}
         planDate={planDateTime}
         />
+        <AcceptPlanSection/>
+          </div>
+         
+      
+        
+    
       
         
     </div>

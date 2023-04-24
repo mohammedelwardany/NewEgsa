@@ -34,7 +34,7 @@ FixedPlandata.map(((data,i)=>{
   //   console.log(i)
   // }
   return(
-    <ToggleButton key={data.sequenceNumber} value={data.sequenceNumber} aria-label="1" style={{margin:"0.5rem 0.5rem 0rem 0.5rem",borderWidth:"0.1rem",borderRadius:"0.5rem",height:"2rem"}}>
+    <ToggleButton key={data.name} value={data.name} aria-label="1" style={{margin:"0.5rem 0.5rem 0rem 0.5rem",borderWidth:"0.1rem",borderRadius:"0.5rem",height:"2rem"}}>
     {data.name}
   </ToggleButton>
   )

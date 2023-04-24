@@ -9,7 +9,7 @@ const Parameters = () => {
   const dispatch = useDispatch();
     return(
         <div>
-    <PlanSetName/>
+    {/* <PlanSetName/> */}
         <div className="settings-page m-20 d-grid gap-20"></div>
           <div className="editinfo p-20 bg-white rad-10 bs">
             

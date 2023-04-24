@@ -21,7 +21,7 @@ const AcceptPlanSection = () => {
     dispatch(TakeExecuteLaterEnable())
   };
     return(
-        <div >
+        <div className='fs-15 w-full'>
         <div className="projects p-20 bg-white rad-10 m-20 bs">
           <h2 className="mt-0 mb-20">Execution</h2>
           <div >

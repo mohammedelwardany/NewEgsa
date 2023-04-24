@@ -10,7 +10,7 @@ const PlanSetName = () => {
   const {planName} = useSelector(state => state.plan)
   const dispatch=useDispatch()
     return(
-        <div style={{marginTop:40}}>
+        <div>
         
           <div className="editinfo p-20 bg-white rad-10 bs">
             

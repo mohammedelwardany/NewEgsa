@@ -58,7 +58,7 @@ export default function CommendPannel() {
     <Box
    
 
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex',overflowX:"scroll"}}
+      sx={{ flexGrow: 1, display: 'flex',overflowX:"scroll"}}
     >
       <Tabs
         orientation="vertical"
@@ -66,7 +66,7 @@ export default function CommendPannel() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider',maxWidth:300,minWidth:80 }}
+        sx={{ borderRight: 1, borderColor: 'divider' }}
       >
 {
 
@@ -80,6 +80,9 @@ subsystemCommendsdata.map(((subsystemCommendsdata,i)=>{
   return(
    
 <Tab key={subsystemCommendsdata.id} label={subsystemCommendsdata.subSystemName} {...a11yProps(subsystemCommendsdata.id)} />
+  
+  
+  
   )
 
 })
@@ -95,7 +98,7 @@ subsystemCommendsdata.map(((subsystemCommendsdata,i)=>{
         <Tab label="Item Seven" {...a11yProps(6)} /> */}
       </Tabs>
 
-      <TabPanel value={value} index={value} style={{maxWidth:500}}>
+      <TabPanel value={value} index={value} >
         <VerticalToggleButtons index={value}
         datas={subsystemCommendsdata[value].commands}
         // datas={[]]}
