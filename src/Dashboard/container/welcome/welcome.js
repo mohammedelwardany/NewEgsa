@@ -1,9 +1,11 @@
 import  React from 'react';
 import '../../../css/framework.css';
 import '../../../css/master.css';
+import { useSelector } from 'react-redux';
 // import '../../RoutePage';
 const Welcome = () => {
-  
+  const { allUserData } = useSelector(state => state.user)
+
     return(
         <div className="welcome bg-white rad-10 txt-c-mobile block-mobile bs">
         <div className="intro p-20 d-flex space-between bg-eee">
@@ -15,7 +17,7 @@ const Welcome = () => {
         </div>
         <img src="imgs/avatar.png" alt="" className="avatar" />
         <div className="body txt-c d-flex p-20 mt-20 mb-20 block-mobile">
-          <div>Anss Mohamed<span className="d-block c-grey fs-14 mt-10">Developer</span></div>
+          <div>{allUserData.firstName} {allUserData.lastName}<span className="d-block c-grey fs-14 mt-10">Developer</span></div>
           <div>80 <span className="d-block c-grey fs-14 mt-10">Projects</span></div>
           <div>$8500 <span className="d-block c-grey fs-14 mt-10">Earned</span></div>
         </div>

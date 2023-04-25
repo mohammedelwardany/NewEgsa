@@ -3,7 +3,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux';
-import { TakeArrange, TakePlanId, TakePlanName } from '../../../Redux/PlanSlice';
+import { TakeArrange, TakePlanId, TakePlanName, replacmentFlag } from '../../../Redux/PlanSlice';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
@@ -17,7 +17,7 @@ const GeneralFunction = ({type , formLabel, placeholder , OnType }) => {
     if (type == 'id')
     {dispatch(TakePlanId({planId:e.target.value}))}
     if (type == 'arrange')
-    {dispatch(TakeArrange())}
+    {dispatch(TakeArrange({arrange:e.target.value}))}
   }
   return (
     <div>
@@ -57,9 +57,10 @@ const GeneralFunction = ({type , formLabel, placeholder , OnType }) => {
 
 const EditPlanTable = () => {
   const [alignment, setAlignment] = React.useState('replace');
-
+const dispatch = useDispatch()
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+    dispatch(replacmentFlag({replacmentFlag:newAlignment}))
   };
 
   return (

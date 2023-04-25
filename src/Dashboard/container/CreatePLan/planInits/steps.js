@@ -12,10 +12,16 @@ import PlanSetName from '../../PlanSubsystem/planSetName';
 import CPGeneralModal from '../GeneralModal/generalModal';
 import { GeneralFunction, GetPlanByIdModal } from '../generalModalElements';
 import { useDispatch } from 'react-redux';
-import { GetPlanById, TakePlanName } from '../../../../Redux/PlanSlice';
+import { GetPlanById, GetPlannData, TakePlanName } from '../../../../Redux/PlanSlice';
 
 function GetPlanBy(){
     const dispatch = useDispatch();
+    React.useEffect(() => {
+        dispatch(GetPlannData());
+    
+
+    }, [dispatch])
+    
     return(
         <>
         <FixedPlansPanel/>

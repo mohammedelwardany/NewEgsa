@@ -1,10 +1,12 @@
 import  React from 'react';
+import { useSelector } from 'react-redux';
 
 
 
 
 const Profile = () => {
-  
+  const { allUserData } = useSelector(state => state.user)
+
     return(
         <div>
         <h1 className="p-relative">Profile</h1>
@@ -18,7 +20,7 @@ const Profile = () => {
                 <img className="rounded-circle mt-5" width="200px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
                 </div>
               <div>
-                <span>Anss Mohamed</span>
+                <span>{allUserData.firstName} {allUserData.lastName}</span>
                 <p className="c-grey fs-13 pt-5 pb-25">frontend Developer And Admin</p>
                 <a className="button bg-blue c-white btn-shape mr-10" href="#">Edit Profile</a>
                 <a className="button bg-blue c-white btn-shape ml-10" href="#">Delete Profile</a>

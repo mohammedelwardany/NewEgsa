@@ -5,16 +5,18 @@ import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useDispatch, useSelector } from 'react-redux';
-import { TakePlanName } from '../../../../Redux/PlanSlice';
+import { GetPlanByName, TakePlanName } from '../../../../Redux/PlanSlice';
 
 export default function VerticalPlansToggleButtons({dataInvoice,dataKey,datas,dataLabels}) {
   const [view, setView] = React.useState('1');
   const {FixedPlandata} = useSelector(state => state.plan)
   const dispatch = useDispatch();
-  const handleChange = (event, nextView) => {
+  const handleChange = async (event, nextView) => {
     setView(nextView);
     console.log(nextView)
-    dispatch(TakePlanName({planName:nextView}))
+    await dispatch(TakePlanName({planName:nextView}))
+    dispatch(GetPlanByName())
+
   };
 
   return (
@@ -37,7 +39,7 @@ FixedPlandata.map(((data,i)=>{
   //   console.log(i)
   // }
   return(
-    <ToggleButton key={data.name} value={data.name} aria-label="1" style={{margin:"0.5rem 0.5rem 0rem 0.5rem",borderWidth:"0.1rem",borderRadius:"0.5rem",height:"2rem"}}>
+    <ToggleButton key={data.id} value={data.name} aria-label="1" style={{margin:"0.5rem 0.5rem 0rem 0.5rem",borderWidth:"0.1rem",borderRadius:"0.5rem",height:"2rem"}}>
     {data.name}
   </ToggleButton>
   )

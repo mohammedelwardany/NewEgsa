@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+
 
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,12 +8,24 @@ import axios from 'axios'
 //success
 //error
 
-
+export const GetUserData = createAsyncThunk("userapi/data", async (_, thunkAPI) => {
+  const resss = await axios.get('https://localhost:7152/api/User/GetUserById?id=8fff3cf5-3c5b-44b6-aa97-1a6c96de66f1')
+    .then(function (response) {
+      const res = response.data
+      // console.log(res);
+      return res;
+    })
+    .catch(function (error) {
+      // console.log(error);
+      return error;
+    });
+  return resss;
+})
 
 
 
 export const UserSlice = createSlice({
-  name: 'api',
+  name: 'userapi',
   initialState:{
 userData : {
     firstName: "",
@@ -22,8 +35,32 @@ userData : {
     password: "",
     numberPhone: ""
   },
+
+  allUserData:{
+    firstName: "string",
+    lastName: "string",
+    plans: null,
+    feedbacks: null,
+    posts: null,
+    id: "",
+    userName: "",
+    normalizedUserName: "",
+    email: "",
+    normalizedEmail: "",
+    emailConfirmed: false,
+    passwordHash: "",
+    securityStamp: "",
+    concurrencyStamp: "",
+    phoneNumber: "",
+    phoneNumberConfirmed: false,
+    twoFactorEnabled: false,
+    lockoutEnd: null,
+    lockoutEnabled: false,
+    accessFailedCount: 0
+  },
 token : "" ,
 formData:[],
+loading:false,
 accepted:false,
 
   },
@@ -123,6 +160,21 @@ accepted:false,
         state.error= true;
     }
   },
+  extraReducers : {
+    [GetUserData.pending]: (state) => {
+      state.loading = true;
+    },
+    [GetUserData.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.allUserData =  action.payload
+        console.log(state.allUserData)
+
+    },
+    [GetUserData.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+  }
   
 }
 )

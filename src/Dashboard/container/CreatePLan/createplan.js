@@ -16,7 +16,7 @@ import PlanTable from '../PlanTable/PlanTable';
 import AcceptPlanSection from '../PlanSubsystem/acceptPlanSection';
 import PlanSetName from '../PlanSubsystem/planSetName';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetFixedPlannData, GetPlanData, GetPlannData } from '../../../Redux/PlanSlice';
+import { GetFixedPlannData, GetPlanData, GetPlannData, replace2elements } from '../../../Redux/PlanSlice';
 import { useEffect } from 'react';
 import CPModal from './planInits/modal';
 import '../../../css/framework.css';
@@ -117,7 +117,7 @@ const CreatePlan = () => {
           </div>
         </div>
 
-        <div className="m-20 d-grid gap-20">
+        <div className="m-20 gap-20">
 
           <PlanTable statusstate={"none"}
             dataSet={allPlanData}
@@ -126,7 +126,7 @@ const CreatePlan = () => {
             elementsss={
               <>
                 <Stack direction="row" spacing={2}>
-                  <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+                  <Button variant="outlined" color="error" onClick={()=>{dispatch(replace2elements({fromIndex:1,toIndex:3}))}} startIcon={<DeleteIcon />}>
                     Delete
                   </Button>
                   <CPAddModal />

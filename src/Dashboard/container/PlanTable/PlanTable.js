@@ -7,11 +7,13 @@ import '../../../css/framework.css';
 import '../../../css/master.css';
 import CPGeneralModal from '../CreatePLan/GeneralModal/generalModal';
 import { EditPlanTable } from '../CreatePLan/generalModalElements';
+import { useDispatch } from 'react-redux';
+import { deleteFrom } from '../../../Redux/PlanSlice';
 
-const PlanTable = ({statusstate,dataSet,planName,planDate,elementsss}) => {
-  
+const PlanTable = ({editstate,statusstate,dataSet,planName,planDate,elementsss}) => {
+  const dispatch = useDispatch();
     return(
-        <div>
+        <div className='fs-15 w-full '>
         <h1 className="p-relative">Plan Table</h1>
         <div className="projects p-20 bg-white rad-10 m-20 bs">
           <div className='d-flex between-flex m-15' style={{alignItems:"center",justifyContent:"end"}}>
@@ -44,7 +46,8 @@ const PlanTable = ({statusstate,dataSet,planName,planDate,elementsss}) => {
                       console.log(dataSet.sequenceNumber)
                     }
                     const handleDelete = () =>{
-                        console.log(dataSet.sequenceNumber)
+                        console.log(i)
+                        dispatch(deleteFrom({fromIndex:i}))
                     }
                   return(
    
@@ -54,7 +57,7 @@ const PlanTable = ({statusstate,dataSet,planName,planDate,elementsss}) => {
                     <td>{dataSet.CommendDescription}</td>
                     <td>{dataSet.repeat}</td>
                     <td>{dataSet.delay}</td>
-                    <td>
+                    <td style={{display:`${editstate}`}}>
                     <Stack direction="row" spacing={1}>
       {/* <IconButton aria-label="delete" onClick={handleEdit}>
         <EditIcon />
@@ -64,6 +67,8 @@ const PlanTable = ({statusstate,dataSet,planName,planDate,elementsss}) => {
       buttonV={'none'}
       IconButtonIcon={<EditIcon />}
       modalTitle={'edit table'}
+      type={'arrange'}
+      fromindex={i}
       modalElements={<EditPlanTable/>}
       />
 

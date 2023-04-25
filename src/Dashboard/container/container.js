@@ -1,4 +1,4 @@
-import  React from 'react';
+import  React, { useEffect } from 'react';
 import '../../css/framework.css';
 import '../../css/master.css';
 import Header from './header/header';
@@ -12,7 +12,13 @@ import CreatePlan from './CreatePLan/createplan';
 import PlayBack from './playBack/PlayBack';
 import OnlineResults from './OnlineResults/OnlineResults';
 import InsideRoute from '../insideRoute'
+import { useDispatch } from 'react-redux';
+import { GetUserData } from '../../Redux/UserSlice';
 const Container = () => {
+    const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(GetUserData())
+  }, [dispatch])
   
     return(
         <div className="content w-full">

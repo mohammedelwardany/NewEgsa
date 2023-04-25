@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import { useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { GetPlanById, GetPlanByName, TakeArrange, TakePlanId, TakePlanName } from '../../../../Redux/PlanSlice';
+import { GetPlanById, GetPlanByName, TakeArrange, TakePlanId, TakePlanName, replacement } from '../../../../Redux/PlanSlice';
 
 
 const style = {
@@ -27,8 +27,9 @@ const style = {
 
 
 
-export default function CPGeneralModal({ type, ElementTitle, LinkV, IconButtonV, IconButtonIcon, buttonV, modalTitle, modalElements, buttonColor, ButtonIcon }) {
+export default function CPGeneralModal({fromindex, type, ElementTitle, LinkV, IconButtonV, IconButtonIcon, buttonV, modalTitle, modalElements, buttonColor, ButtonIcon }) {
   const [open, setOpen] = React.useState(false);
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
@@ -39,10 +40,11 @@ export default function CPGeneralModal({ type, ElementTitle, LinkV, IconButtonV,
     if (type == 'id')
     {dispatch(GetPlanById())}
     if (type == 'arrange')
-    {dispatch()}
+    {dispatch(replacement({fromIndex:fromindex}))}
 
   }
-  const onSubmit = () =>{
+  const onSubmit = (e) =>{
+    // console.log(e)
     SubmitHandler();
     handleClose();
   }
