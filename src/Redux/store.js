@@ -19,6 +19,6 @@ const store = configureStore({
         playBack : PlayBackSlice,
         blog : BlogSlice
     },
-    middleware: (getDefaultMiddleware)
+    
 })
 export default store;

@@ -9,6 +9,55 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import FixedPlansPanel from '../../PlanSubsystem/FixedPlanPanel';
 import PlanSetName from '../../PlanSubsystem/planSetName';
+import CPGeneralModal from '../GeneralModal/generalModal';
+import { GeneralFunction, GetPlanByIdModal } from '../generalModalElements';
+import { useDispatch } from 'react-redux';
+import { GetPlanById, TakePlanName } from '../../../../Redux/PlanSlice';
+
+function GetPlanBy(){
+    const dispatch = useDispatch();
+    return(
+        <>
+        <FixedPlansPanel/>
+        <div>
+          <p  style={{display:"flex",flexDirection:"row",textAlign:'center'}}>you can also 
+          &nbsp;
+          <CPGeneralModal  
+        type={'id'}
+        buttonV={'none'}
+        IconButtonV={'none'}
+        ElementTitle={' get plan by id '}
+        // ElementFontColor={"blue"}
+        modalElements={<GeneralFunction
+        formLabel={'plan id'}
+        placeholder={0}
+        type={'id'}
+        />}
+        modalTitle={'get plan by id'}
+        />
+        &nbsp;
+         or 
+        &nbsp;
+        <CPGeneralModal  
+        type={'name'}
+        buttonV={'none'}
+        IconButtonV={'none'}
+        ElementTitle={' get plan by name '}
+        // ElementFontColor={"blue"}
+        modalElements={<GeneralFunction
+        formLabel={'plan name'}
+        placeholder={'plan'}
+        type={'name'}
+        />}
+        modalTitle={'get plan by id'}
+        />
+        
+        </p>  
+        </div>
+        
+        </>
+    )
+}
 
 const steps = [
     {
@@ -18,7 +67,7 @@ const steps = [
     ,
     {
         subject: 'Select Fixed Plan',
-        selement: <FixedPlansPanel/>
+        selement: <GetPlanBy/>
     }
     , {
         subject: 'Set Plan Name',

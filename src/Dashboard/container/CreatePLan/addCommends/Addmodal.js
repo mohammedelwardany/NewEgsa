@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useEffect } from 'react';
@@ -30,7 +31,9 @@ export default function CPAddModal({useElement,openstate}) {
     
   return (
     <div>
-      <Button onClick={handleOpen}>Opennnn</Button>
+      <Button onClick={handleOpen} variant="contained" endIcon={<AddCircleIcon />}>
+        Add Plan
+      </Button>
       <Modal
         open={open}
         // onClose={handleClose}

@@ -14,7 +14,10 @@ import axios from 'axios'
 export const BlogSlice = createSlice({
   name: 'api',
   initialState:{
-PlanCommendData : {
+
+  name:"",
+
+  PlanCommendData : {
     postTitle: "string",
     postContent: "string",
     postDate: "2023-03-28T11:29:12.156Z",

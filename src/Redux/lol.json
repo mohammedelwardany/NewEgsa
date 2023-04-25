@@ -69,3 +69,46 @@
 
 
 ]
+
+
+
+
+
+{
+    "plan": [
+      {
+        "sequenceNumber": 1,
+        "subSystemName": "MPU",
+        "description": "GYRO"
+        
+      },
+      {
+
+      }
+    ],
+    "result": [
+      {
+        "planSequenceNumber": 1,
+        "planId": 1,
+        "plan": {
+          "name": "nn",
+          "sequenceNumber": 1,
+          "delay": "1",
+          "repeat": "1",
+          "acknowledgeId": 1,
+          "subSystemId": 1,
+          "commandId": 1,
+          "divces": 1,
+          "inputParamter": 1,
+          "dateTime": "2022-01-01T00:00:00",
+          "flagWatting": true,
+          "applicationUser": null
+        },
+        "time": "2022-01-01T00:00:00",
+        "result": ""
+      },
+      {
+
+      }
+    ]
+  }

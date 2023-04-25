@@ -1,14 +1,24 @@
 import  React from 'react';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import '../../../css/framework.css';
 import '../../../css/master.css';
+import CPGeneralModal from '../CreatePLan/GeneralModal/generalModal';
+import { EditPlanTable } from '../CreatePLan/generalModalElements';
 
-const PlanTable = ({statusstate,dataSet,planName,planDate}) => {
+const PlanTable = ({statusstate,dataSet,planName,planDate,elementsss}) => {
   
     return(
         <div>
         <h1 className="p-relative">Plan Table</h1>
         <div className="projects p-20 bg-white rad-10 m-20 bs">
-          <h2 className="mt-0 mb-20">Plan : {planName}<sub> execute at : {planDate}</sub></h2>
+          <div className='d-flex between-flex m-15' style={{alignItems:"center",justifyContent:"end"}}>
+          {/* <h2 className="mt-0 mb-20">Plan : {planName}</h2> */}
+          {elementsss}
+
+          </div>
           <div className="responsive-table">
             <table className="fs-15 w-full">
               <thead>
@@ -18,6 +28,7 @@ const PlanTable = ({statusstate,dataSet,planName,planDate}) => {
                   <td>Commend</td>
                   <td>repeat</td>
                   <td>delay</td>
+                  <td>edit</td>
                   <td style={{display:`${statusstate}`}}>Status</td>
                 </tr>
               </thead>
@@ -29,6 +40,12 @@ const PlanTable = ({statusstate,dataSet,planName,planDate}) => {
 
                 dataSet.map(((dataSet,i)=>{
 
+                    const handleEdit = () =>{
+                      console.log(dataSet.sequenceNumber)
+                    }
+                    const handleDelete = () =>{
+                        console.log(dataSet.sequenceNumber)
+                    }
                   return(
    
                     <tr key={dataSet.sequenceNumber}>
@@ -37,6 +54,25 @@ const PlanTable = ({statusstate,dataSet,planName,planDate}) => {
                     <td>{dataSet.CommendDescription}</td>
                     <td>{dataSet.repeat}</td>
                     <td>{dataSet.delay}</td>
+                    <td>
+                    <Stack direction="row" spacing={1}>
+      {/* <IconButton aria-label="delete" onClick={handleEdit}>
+        <EditIcon />
+      </IconButton> */}
+      <CPGeneralModal
+      LinkV={'none'}
+      buttonV={'none'}
+      IconButtonIcon={<EditIcon />}
+      modalTitle={'edit table'}
+      modalElements={<EditPlanTable/>}
+      />
+
+      <IconButton aria-label="delete" color="error" onClick={handleDelete}>
+        <DeleteIcon />
+      </IconButton>
+
+    </Stack>
+                    </td>
                     <td style={{display:`${statusstate}`}}><span className="label btn-shape bg-orange c-white">Pending</span></td>
                   </tr>
   

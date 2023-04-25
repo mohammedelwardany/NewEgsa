@@ -8,6 +8,7 @@ import { TakePlanName } from '../../../Redux/PlanSlice';
 
 const PlanSetName = () => {
   const {planName} = useSelector(state => state.plan)
+  const {planNameSetted} = useSelector(state => state.plan)
   const dispatch=useDispatch()
     return(
         <div>
@@ -26,9 +27,10 @@ const PlanSetName = () => {
                 className="b-none border-ccc p-10 rad-6 d-block w-full"
                 id="last"
                 type="text"
-                placeholder="0"
+                placeholder={planName }
                 onChange={(planName)=>{dispatch(TakePlanName({planName:planName.target.value}))}}
                 value={planName}
+                disabled={planNameSetted}
               />
               
             </div>

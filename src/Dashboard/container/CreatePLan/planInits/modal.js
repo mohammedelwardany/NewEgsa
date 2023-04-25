@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import EditIcon from '@mui/icons-material/Edit';
 import CPSteps from './steps';
 import PlanSetName from '../../PlanSubsystem/planSetName';
 import FixedPlansPanel from '../../PlanSubsystem/FixedPlanPanel';
@@ -35,8 +36,10 @@ export default function CPModal({useElement,openstate}) {
     
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Modal
+      <Button onClick={handleOpen} variant="contained" endIcon={<EditIcon />}>
+        Edit
+      </Button>
+        <Modal
         open={open}
         // onClose={handleClose}
         aria-labelledby="modal-modal-title"
