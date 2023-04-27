@@ -1,4 +1,4 @@
-import  React from 'react';
+import React from 'react';
 import '../../css/framework.css';
 import '../../css/master.css';
 import Container from '../container/container';
@@ -12,69 +12,76 @@ const Sidebar = () => {
   const [defaultBtn, setdefaultBtn] = useState()
 
   const [activeButtonId, setActiveButtonId] = useState(defaultBtn ? defaultBtn.id : null);
-  const sidebarNav = 
-  [{
-  id:0,
-  pagename:"Dashboard",
-  refrence:"/system",
-  active:"",
-  icon:"fa-regular fa-chart-bar fa-fw"
-  },
-  {
-    id:1,
-    pagename:"Profile",
-    refrence:"/system/Profile",
-    active:"",
-    icon:"fa-regular fa-user fa-fw"
-    }
-    ,
+  const sidebarNav =
+    [{
+      id: 0,
+      pagename: "Dashboard",
+      refrence: "/system",
+      active: "",
+      icon: "fa-regular fa-chart-bar fa-fw"
+    },
     {
-      id:2,
-      pagename:"Create Plans",
-      refrence:"/system/CreatePlan",
-      active:"",
-      icon:"fa-sharp fa-solid fa-sheet-plastic fa-fw"
-      }
-    ,{
-        id:3,
-        pagename:"PlayBack",
-        refrence:"/system/PlayBack",
-        active:"",
-        icon:"fa-solid fa-repeat fa-fw"
-        }
-  
-  ]
-    return(
-        <div className="page d-flex">
+      id: 1,
+      pagename: "Profile",
+      refrence: "/system/Profile",
+      active: "",
+      icon: "fa-regular fa-user fa-fw"
+    }
+      ,
+    {
+      id: 2,
+      pagename: "Create Plans",
+      refrence: "/system/CreatePlan",
+      active: "",
+      icon: "fa-sharp fa-solid fa-sheet-plastic fa-fw"
+    }
+      , {
+      id: 3,
+      pagename: "PlayBack",
+      refrence: "/system/PlayBack",
+      active: "",
+      icon: "fa-solid fa-repeat fa-fw"
+    }
+    , {
+      id: 4,
+      pagename: "Comunity",
+      refrence: "/system/blog",
+      active: "",
+      icon: "fa-solid fa-repeat fa-fw"
+    }
+
+    ]
+  return (
+    <div className="page d-flex">
       <div className="sidebar bg-white p-20 p-relative">
         <h3 className="p-relative txt-c mt-0">FCC Dashboard</h3>
-        <img src="imgs/rover.jpg" alt="" style={{width: "100%"}}/>
+        <img src="imgs/rover.jpg" alt="" style={{ width: "100%" }} />
         <ul>
           <nav>
-{
+            {
 
 
-        sidebarNav.map(((sidebarNav,i)=>{
-          const handleButtonClick = event  => {
-            setActiveButtonId(Number(event.target.value));
-            console.log(i)
-          }
-          return(
-           
-            <li key={sidebarNav.id}>
-            <Link className={
-              sidebarNav.id === activeButtonId ? "active d-flex align-center fs-14 c-black rad-6 p-10":"d-flex align-center fs-14 c-black rad-6 p-10"} to={sidebarNav.refrence} onClick={handleButtonClick}>
-              <i className={sidebarNav.icon}></i>
-              <span>{sidebarNav.pagename}</span>
-            </Link>
-          </li>
-          )
+              sidebarNav.map(((sidebarNav, i) => {
+                const handleButtonClick = event => {
+                  setActiveButtonId(Number(event.target.value));
+                  console.log(i)
+                }
+                return (
 
-        })
+                  <li key={sidebarNav.id}>
+                    <Link className={
+                      sidebarNav.id === activeButtonId ? "active d-flex align-center fs-14 c-black rad-6 p-10" : "d-flex align-center fs-14 c-black rad-6 p-10"} to={sidebarNav.refrence} onClick={handleButtonClick}>
+                      <i className={sidebarNav.icon}></i>
+                      <span>{sidebarNav.pagename}</span>
+                    </Link>
+                  </li>
+                )
 
-        )
-}
-</nav>
+              })
+
+              )
+            }
+          </nav>
           {/* <li >
             <a className="active d-flex align-center fs-14 c-black rad-6 p-10" href='/system' >
               <i className="fa-regular fa-chart-bar fa-fw"></i>
@@ -113,15 +120,15 @@ const Sidebar = () => {
               <span>PlayBack</span>
             </a>
           </li>   */}
-          
+
         </ul>
-       
-      </div>
-      <Container/>
 
       </div>
-    )
-  
+      <Container />
+
+    </div>
+  )
+
 }
 
 export default Sidebar;

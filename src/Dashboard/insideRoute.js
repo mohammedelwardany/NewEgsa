@@ -7,6 +7,7 @@ import Profile from './container/profile/profile';
 import CreatePlan from './container/CreatePLan/createplan';
 import PlayBack from './container/playBack/PlayBack';
 import OnlineResults from './container/OnlineResults/OnlineResults';
+import Community from './container/community/community';
 
 
 function InsideRoute() {
@@ -19,6 +20,7 @@ return (
 	    <Route path="/CreatePlan" element={<CreatePlan/>} />
         <Route path="/PlayBack" element={<PlayBack/>} />
         <Route path="/OnlineResults" element={<OnlineResults/>} />
+		<Route path="/blog" element={<Community/>} />
      	</Routes>
 	
 );  

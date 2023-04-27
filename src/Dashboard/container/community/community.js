@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../../css/framework.css';
 import '../../../css/master.css';
 import '../../../css/style.css';
 import CreatePost from './createpost';
 import InputEmoji from 'react-input-emoji'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetPosts, SendPost, TakeFile, TakePage, TakePostContent } from '../../../Redux/BlogSlice';
 
 
 const Community = () => {
-  
+    // const [page, setPage] = React.useState(1);
+    const { page } = useSelector(state=>state.blog)
+    const handleChange = (event, value) => {
+        // setPage(value);
+        dispatch(TakePage({page:value}))
+        dispatch(GetPosts())
+        // console.log(value)
+      };
+    const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(GetPosts())
+    
+    
+    }, [dispatch])
+    
    
     return(
         <div className="content w-full">
@@ -18,7 +36,7 @@ const Community = () => {
                 <div >
                 <img className="globalRoundProfile" src="imgs/2.jpg" alt=""/>  
                 </div>
-                <InputEmoji className="post " placeholder="What's on your mind?" />
+                <InputEmoji className="post " onChange={(e)=>dispatch(TakePostContent({postContent:e}))} placeholder="What's on your mind?" />
             </div>
 
             <div className="buttons">
@@ -28,7 +46,7 @@ const Community = () => {
                     </div>
                         <label for="upload-image" className="post-actions__label">
                             <h4>Photo/Video</h4>
-                            <input type="file" id="upload-image" accept="image/*" multiple/>
+                            <input type="file" id="upload-image" accept="image/*" onChange={(e)=>dispatch(TakeFile({fileAccess:e.target.files[0]}))} />
                         </label>  
                 </span>
 
@@ -38,17 +56,19 @@ const Community = () => {
                     </div>
                     <h4>Feeling/Activity</h4>
                 </span>
-                <a className="visit d-block fs-14 bg-blue c-white w-fit btn-shape" style={{cursor : 'pointer',width: '110px',textAlign: 'center'}}>Publish</a>
+                <button className="visit d-block fs-14 bg-blue c-white w-fit btn-shape" style={{cursor : 'pointer',width: '110px',textAlign: 'center',borderColor:"transparent"}}   onClick={()=>{dispatch(SendPost());dispatch(GetPosts())}}>Publish</button>
             </div>
         </div>
 
-       <CreatePost/>
        <CreatePost/>
 
         
         
       
 
+        <Stack spacing={2} style={{display:"flex",alignItems:"center",margin:4,marginBottom:30}}>
+      <Pagination count={10} page={page} onChange={handleChange} variant="outlined" />
+      </Stack>
         </div>
       </div>
         )

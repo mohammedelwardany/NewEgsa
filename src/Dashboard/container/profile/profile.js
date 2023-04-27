@@ -1,12 +1,18 @@
 import  React from 'react';
 import { useSelector } from 'react-redux';
-
-
+import { useJwt } from "react-jwt";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzYWRlIiwianRpIjoiODA1NGQyZTQtZTE1OC00ZDJlLThmZWQtOGUwOGFjMDZhYjVlIiwiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInVpZCI6IjlhNzQ5MzUxLTI4NDEtNGM3MC05ODc1LWU2YTI4OWZkMWVkNCIsInJvbGVzIjoiVXNlciIsImV4cCI6MTY4MzQwMTc0NiwiaXNzIjoiU2VjdXJlQXBpIiwiYXVkIjoiU2VjdXJlQXBpVXNlciJ9.UgmbpxYGK8HirrD6RBTRFwjxbZpWaVCWovMER5JxU00";
 
 
 const Profile = () => {
   const { allUserData } = useSelector(state => state.user)
+  const { decodedToken, isExpired } = useJwt(token);
 
+  const Handleeer = () =>{
+    console.log(decodedToken)
+    console.log(isExpired)
+
+  }
     return(
         <div>
         <h1 className="p-relative">Profile</h1>
@@ -22,7 +28,7 @@ const Profile = () => {
               <div>
                 <span>{allUserData.firstName} {allUserData.lastName}</span>
                 <p className="c-grey fs-13 pt-5 pb-25">frontend Developer And Admin</p>
-                <a className="button bg-blue c-white btn-shape mr-10" href="#">Edit Profile</a>
+                <a className="button bg-blue c-white btn-shape mr-10" onClick={Handleeer}>Edit Profile</a>
                 <a className="button bg-blue c-white btn-shape ml-10" href="#">Delete Profile</a>
               </div>  
             </div>

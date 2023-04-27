@@ -9,86 +9,257 @@ import axios from 'axios'
 
 
 
+export const GetPosts = createAsyncThunk("apiPosts/posts", async (_, thunkAPI) => {
+  const { getState } = thunkAPI;
+
+  const PageData = getState().blog.page
+
+  const resss = await axios.get(`https://localhost:7152/api/Blog/All-blogs?page=${PageData}`)
+    .then(function (response) {
+      const res = response.data
+      // console.log(res);
+      return res;
+    })
+    .catch(function (error) {
+      // console.log(error);
+      return error;
+    });
+  return resss;
+})
 
 
-export const BlogSlice = createSlice({
-  name: 'api',
-  initialState:{
+export const SendPost = createAsyncThunk("apiPosts/SendPost", async (_, thunkAPI) => {
+  const { getState } = thunkAPI;
+  const CreatePostData = getState().blog.PostCreationData
+  const userId = getState().user.allUserData.id
+  ///////time manager
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var time = today.toLocaleTimeString('it-IT')
+  var dateTime = date + 'T' + time;
+  console.log(dateTime)
 
-  name:"",
 
-  PlanCommendData : {
-    postTitle: "string",
-    postContent: "string",
-    postDate: "2023-03-28T11:29:12.156Z",
-    postImages: "string",
-    userId: "string"
-  },
-  formData:[],
-  accepted:false,
 
-  },
-  reducers: {
-    // RegisterData: (state,action) => {
-    //     state.userData.firstName = action.payload.firstName;
-    //     state.userData.lastName = action.payload.lastName;
-    //     state.userData.username = action.payload.username;
-    //     state.userData.email = action.payload.email;
-    //     state.userData.password = action.payload.password;
-    //     state.userData.numberPhone = action.payload.numberPhone;
-     
-    // },
+  const bodyFormData = new FormData();
+  bodyFormData.append('postTitle', CreatePostData.postTitle);
+  bodyFormData.append('postContent', CreatePostData.postContent);
+  bodyFormData.append('postDate', dateTime);
+  bodyFormData.append('formFile', CreatePostData.postImages);
+  bodyFormData.append('UserId', userId);
+  console.log("check")
 
-    GetBlogs : (state) =>{
+// console.log(bodyFormData.values())
 
-          axios.get('https://localhost:7152/api/Blog/allblogs?page=2&pageSize=12')
-      .then(function (response) {
-        const res = response.data
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-        
-      });
-      
-    },
 
-    
 
-    PostBlogImages : (state) =>{
-      const dataForm = {
-        "postTitle": "string",
-        "postContent": "string",
-        "postDate": "2023-03-28T11:29:12.156Z",
-        "postImages": "string",
-        "userId": "string"
-        }
-        const dataf=JSON.stringify(dataForm)
-        console.log(dataf);
-        axios.post('https://localhost:7152/api/Blog/Images',dataf,{
-      headers: {
-        // Overwrite Axios's automatically set Content-Type
-        'Content-Type': 'application/json'
-      }})
+  const res = await axios.post('https://localhost:7152/api/Blog/Images', bodyFormData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
     .then(function (response) {
       const res = response
       console.log(res);
-      state.accepted=true
+      console.log ("success")
+
     })
     .catch(function (error) {
       console.log(error);
-      //state.accepted=false
-      
-    });
-    
-  },
 
+    });
+// // const res = 1
+  return res;
+})
+
+
+export const feedbackHandle = createAsyncThunk("apiPosts/feedbackHandle", async (_, thunkAPI) => {
+  const { getState } = thunkAPI;
+  const CreatePostData = getState().blog.feedBackData
+  const userId = getState().user.allUserData.id
+
+  ///////time manager
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var time = today.toLocaleTimeString('it-IT')
+  var dateTime = date + 'T' + time;
+  // console.log(time)
+
+
+
+  const dataf = {
+    "comment": CreatePostData.comment,
+    "feedbacktime": dateTime,
+    "userId": userId,
+    "postId": CreatePostData.postId
+  }
+
+
+  const res = await axios.post('https://localhost:7152/api/Blog/Feedback', dataf, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(function (response) {
+      const res = response
+      console.log(res);
+      
+    })
+    .catch(function (error) {
+      console.log(error);
+
+    });
+// const res = 1
+  return res;
+
+})
+
+
+
+
+export const DeletePost = createAsyncThunk("apiPosts/DeletePost", async (_, thunkAPI) => {
+  const { getState } = thunkAPI;
+  const PostId = getState().blog.deletePostId
+  const resss = await axios.get(`https://localhost:7152/api/Blog/Delete Post?postId=${PostId}`)
+    .then(function (response) {
+      const res = response.data
+      // console.log(res);
+      return res;
+    })
+    .catch(function (error) {
+      // console.log(error);
+      return error;
+    });
+  return resss;
+})
+
+
+
+
+
+
+export const BlogSlice = createSlice({
+  name: 'apiPosts',
+  initialState: {
+
+    name: "",
+
+    PostCreationData: {
+      postTitle: "post",
+      postContent: "",
+      postDate: "",
+      postImages: "",
+      userId: ""
+    },
+
+    feedBackData: {
+      comment: "",
+      feedbacktime: "",
+      userId: "",
+      postId: 0
+    },
+    fileAccess:null,
+    PostsData: [],
+    loading:false,
+    error:false,
+    accepted: false,
+    deletePostId:0,
+    page:1
   },
-  
+  reducers: {
+
+    TakeFile: (state,action) => {
+      state.fileAccess = action.payload.fileAccess
+      const filename = state.fileAccess
+      state.PostCreationData.postImages = `@${filename.name};type=${filename.type}`
+      console.log(state.PostCreationData.postImages)
+    
+},
+TakePostContent: (state,action) => {
+  state.PostCreationData.postContent=action.payload.postContent
+ console.log (state.PostCreationData.postContent)
+
+    },
+
+    TakePage: (state,action) => {
+      state.page=action.payload.page
+     
+    
+        },
+    
+    TakeFeedBackContent: (state,action) => {
+      state.feedBackData.comment=action.payload.comment
+      state.feedBackData.postId=action.payload.postId
+        },
+        TakeDelete: (state,action) => {
+          state.deletePostId=action.payload.deletePostId
+            },
+
+
+  },extraReducers:{
+    [GetPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [GetPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      const response = action.payload
+      console.log(response)
+      state.PostsData=response
+    },
+    [GetPosts.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+
+    [SendPost.pending]: (state) => {
+      state.loading = true;
+    },
+    [SendPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      const response = action.payload
+      console.log(response)
+      state.PostCreationData.postContent=""
+      state.PostCreationData.postImages=""
+    },
+    [SendPost.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [feedbackHandle.pending]: (state) => {
+      state.loading = true;
+    },
+    [feedbackHandle.fulfilled]: (state, action) => {
+      state.loading = false;
+      const response = action.payload
+      console.log(response)
+      // state.PostCreationData.postContent=""
+      // state.PostCreationData.postImages=""
+    },
+    [feedbackHandle.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+    [DeletePost.pending]: (state) => {
+      state.loading = true;
+    },
+    [DeletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      const response = action.payload
+      console.log(response)
+
+    },
+    [DeletePost.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
+  }
+
 }
 )
 
 // Action cREators are generated for each case reducer function
-export const {GetBlogs,PostBlogImages} = BlogSlice.actions
+export const {TakePage,TakeDelete,TakeFeedBackContent,TakeFile,TakePostContent, GetBlogs, PostBlogImages } = BlogSlice.actions
 
 export default BlogSlice.reducer
