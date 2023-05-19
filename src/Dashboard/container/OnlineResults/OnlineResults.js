@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PlanTable from '../PlanTable/PlanTable';
 import ChartHandles from '../playBack/ChartHandles';
 import DayPlanToggle from '../playBack/DayPlans';
@@ -9,6 +9,10 @@ import MainResults from '../playBack/MainResultsTable';
 import MainSensorStatus from '../playBack/MainSensorsStatus';
 import HandleSlider from '../playBack/slider';
 import { useDispatch } from 'react-redux';
+import PlanDiscripe from './planDescripe';
+import PageCollapse from './PageCollapse';
+import TapsResult from './taps';
+import { Col, Row } from 'antd';
 
 
 
@@ -16,39 +20,12 @@ const OnlineResults = () => {
     
     
     return(<>
-    <div>
-    <h1 className="p-relative">play Back</h1>
-    <div className="settings-page m-20 d-grid gap-20"></div>
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
+    <div >
+    <h1 className="p-relative">Results</h1>
+    <PlanDiscripe/>
+    <ImageDispaly/>
+    <PageCollapse/>
 
-{/* <GetExecutedPlan/> */}
-<DayPlanToggle/>
-
-</div>
-<HandleSlider/>
-<ImageDispaly/>
-<div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
-
-
-<ChartHandles/>
-<ChartHandles/>
-
-
-</div>
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
-
-<div style={{display:"flex",flexDirection:"column"}}>
-      <MainSensorStatus/>
-<MainResults/>
-</div>
-<div style={{display:"flex",flexDirection:"column"}}>
-      <GyroSensorStatus/>
-<GyroResults/>   
-</div>
-
-
-    </div>
-        <PlanTable/>
     </div>
     
     </>)

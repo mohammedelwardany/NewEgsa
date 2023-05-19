@@ -6,6 +6,7 @@ import PlayBackSlice from "./PlayBackSlice";
 
 
 import UserSlice from "./UserSlice";
+import onlineSlice from "./onlineSlice";
 
 
 
@@ -17,7 +18,8 @@ const store = configureStore({
         user : UserSlice,
         plan : PlanSlice,
         playBack : PlayBackSlice,
-        blog : BlogSlice
+        blog : BlogSlice,
+        online : onlineSlice
     },
     
 })

@@ -5,8 +5,8 @@ import '../../../css/master.css';
 const MainResults = () => {
   
     return(
-        <div className='ResultsContainer'>
-        <div className="projects p-20 bg-white rad-10 m-20 bs">
+        <div className=''>
+        <div className="projects p-20 rad-10 m-20 bs">
           <h2 className="mt-0 mb-20">DHT11&ULTRASONIC results</h2>
           <div className="responsive-table">
             <table className="fs-15 w-full">

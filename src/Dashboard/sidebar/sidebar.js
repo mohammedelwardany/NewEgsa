@@ -35,15 +35,23 @@ const Sidebar = () => {
       active: "",
       icon: "fa-sharp fa-solid fa-sheet-plastic fa-fw"
     }
-      , {
+    , {
       id: 3,
+      pagename: "online results",
+      refrence: "/system/OnlineResults",
+      active: "",
+      icon: "fa-solid fa-repeat fa-fw"
+    }
+    ,
+      , {
+      id: 4,
       pagename: "PlayBack",
       refrence: "/system/PlayBack",
       active: "",
       icon: "fa-solid fa-repeat fa-fw"
     }
     , {
-      id: 4,
+      id: 5,
       pagename: "Comunity",
       refrence: "/system/blog",
       active: "",

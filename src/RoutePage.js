@@ -25,6 +25,7 @@ return (
 		{/* <Route path='/Register' element={<Register/>}/> */}
 		<Route path='/Login' element={<Login/>}/>
 	    <Route path="/system/*" element={<Sidebar/>} />
+		<Route path="/OnlineResults" element={<OnlineResults/>} />
 	
      	</Routes>
 	

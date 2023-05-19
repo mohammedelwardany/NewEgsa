@@ -5,6 +5,7 @@ import Profile from './Dashboard/container/profile/profile';
 import Login from './Forms/Login/Login';
 import Register from './Forms/SignUp/signup';
 import RoutePage from './RoutePage';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
