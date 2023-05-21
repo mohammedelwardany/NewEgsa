@@ -11,6 +11,8 @@ import ImageDispaly from './imagesDisplay';
 import MainResults from './MainResultsTable';
 import MainSensorStatus from './MainSensorsStatus';
 import HandleSlider from './slider';
+import ResultsForPlayback from '../OnlineResults/ResultsForPlayback';
+import PBModal from './PlayBackStepsModel';
 
 
 
@@ -21,36 +23,15 @@ const PlayBack = () => {
     <h1 className="p-relative">play Back</h1>
     <div className="settings-page m-20 d-grid gap-20"></div>
     <div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
-
 {/* <GetExecutedPlan/> */}
-<DayPlanToggle/>
+{/* <DayPlanToggle/> */}
 
 </div>
-<HandleSlider/>
-<ImageDispaly/>
-<div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
+{/* <HandleSlider/> */}
+
+<ResultsForPlayback/>
 
 
-<ChartHandles/>
-<ChartHandles/>
-
-
-</div>
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between" ,flexWrap:"wrap"}}>
-
-<div style={{display:"flex",flexDirection:"column"}}>
-      <MainSensorStatus/>
-<MainResults/>
-</div>
-<div style={{display:"flex",flexDirection:"column"}}>
-      <GyroSensorStatus/>
-<GyroResults/>   
-</div>
-
-
-    </div>
-        <PlanTable 
-        dataSet={[]}/>
     </div>
     
     </>)

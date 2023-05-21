@@ -14,6 +14,11 @@ import PlayBack from './Dashboard/container/playBack/PlayBack';
 import OnlineResults from './Dashboard/container/OnlineResults/OnlineResults';
 import Header from './Dashboard/container/header/header';
 import Container from './Dashboard/container/container';
+import Sign from './Home/sign/sign';
+import Landing from './Home/LandPage/Landing';
+import Services from './Home/LandPage/services';
+import Articles from './Home/LandPage/articles';
+import About from './Home/LandPage/about';
 
 
 function RoutePage() {
@@ -21,9 +26,11 @@ return (
 	
 	   <Routes>
 	   	{/* <Route path='/' element={<Register/>}/> */}
-		<Route path='/' element={<Register/>}/>
-		{/* <Route path='/Register' element={<Register/>}/> */}
-		<Route path='/Login' element={<Login/>}/>
+		   <Route path='/' element={<Landing/>}/>
+    		<Route path='/about' element={<About/>}/>
+	      <Route path="/services" element={<Services/>} />
+        <Route path="/articles" element={<Articles/>} />
+		<Route path='/sign' element={<Sign/>}/>
 	    <Route path="/system/*" element={<Sidebar/>} />
 		<Route path="/OnlineResults" element={<OnlineResults/>} />
 	

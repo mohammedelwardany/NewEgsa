@@ -5,15 +5,25 @@ import Profile from './Dashboard/container/profile/profile';
 import Login from './Forms/Login/Login';
 import Register from './Forms/SignUp/signup';
 import RoutePage from './RoutePage';
+import {  Routes, Route } from 'react-router-dom';
+import Landing from './Home/LandPage/Landing';
+import About from './Home/LandPage/about';
+import Services from './Home/LandPage/services';
+import Articles from './Home/LandPage/articles';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import Sign from './Home/sign/sign';
 
 function App() {
   return (
-    <div>
-    {/* <Sidebar/>   */}
-    <RoutePage/>
- {/* <Register/> */}
-   </div>
+    <>
+   {/* <Routes>
+	    	<Route path='/' element={<Landing/>}/>
+    		<Route path='/about' element={<About/>}/>
+	      <Route path="/services" element={<Services/>} />
+        <Route path="/articles" element={<Articles/>} />
+     	</Routes> */}
+	<RoutePage/>
+   </>
   );
 }
 

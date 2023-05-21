@@ -111,6 +111,7 @@ const TableResults = ({dataa,cols}) => {
       ),
   });
 
-  return <Table columns={cols} dataSource={dataa} />;
+  return <Table columns={cols} dataSource={dataa}  
+  />;
 };
 export default TableResults;

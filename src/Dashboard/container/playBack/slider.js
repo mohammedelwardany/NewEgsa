@@ -1,61 +1,74 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-
-import '../../../css/framework.css';
-import '../../../css/master.css';
-
-
-const marks = [
-  {
-    value: 0,
-    label: '00:00',
-  },
-  {
-    value: 100,
-    label: '01:00',
-  },
-];
-
-function valuetext(value) {
-  return `${value}`;
-}
-
-function valueLabelFormat(value) {
-  return marks.findIndex((mark) => mark.value === value) + 1;
-}
-
-function DiscreteSliderValues() {
+import { Col, InputNumber, Row, Slider, Space } from 'antd';
+import { useState } from 'react';
+const IntegerStep = () => {
+  const [inputValue, setInputValue] = useState(1);
+  const onChange = (newValue) => {
+    setInputValue(newValue);
+  };
   return (
-    <Box sx={{ width: 300 }}>
-      <Slider
-        aria-label="Restricted values"
-        defaultValue={20}
-        valueLabelFormat={valueLabelFormat}
-        getAriaValueText={valuetext}
-        step={null}
-        valueLabelDisplay="auto"
-        marks={marks}
-      />
-    </Box>
+    <Row>
+      <Col span={12}>
+        <Slider
+          min={1}
+          max={20}
+          onChange={onChange}
+          value={typeof inputValue === 'number' ? inputValue : 0}
+        />
+      </Col>
+      <Col span={4}>
+        <InputNumber
+          min={1}
+          max={20}
+          style={{
+            margin: '0 16px',
+          }}
+          value={inputValue}
+          onChange={onChange}
+        />
+      </Col>
+    </Row>
   );
-}
+};
+const DecimalStep = () => {
+  const [inputValue, setInputValue] = useState(0);
+  const onChange = (value) => {
+    if (isNaN(value)) {
+      return;
+    }
+    setInputValue(value);
+  };
+  return (
+    <Row style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <Col span={20}>
+        <Slider
+          min={0}
+          max={1}
+          onChange={onChange}
+          value={typeof inputValue === 'number' ? inputValue : 0}
+          step={0.01}
+        />
+      </Col>
+      <Col span={1}/>
+      <Col span={1}>
 
-
-const HandleSlider = () => {
+        <p>{inputValue}</p>
+      </Col>
+    </Row>
+  );
+};
+const HandleSlider = () => (
+  <div className="p-20 bg-white rad-10 m-20 bs">
   
-    return(
-        <div className="welcome bg-white rad-10 txt-c-mobile block-mobile bs m-20" >
-
-        <div className="body txt-c d-flex p-20 mt-20 mb-20 block-mobile" style={{paddingLeft:70,paddingRight:70}}>
-            <DiscreteSliderValues/>
-        </div>
-      </div>
-
- 
-     
-        )
+  <Space
+    style={{
+      width: '100%',
+    }}
+    direction="vertical"
+  >
+    <DecimalStep />
+  </Space>
   
-}
-
+  </div>
+);
 export default HandleSlider;
+
