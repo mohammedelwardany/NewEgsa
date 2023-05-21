@@ -9,7 +9,7 @@ import '../../../css/master.css';
 import ResponsiveDateTimePickers from './DateTimeBicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetPlayBack, GetPlaybackByDate, GetPlaybackByName } from '../../../Redux/PlayBackSlice';
-import { SendPlan, TakeExecuteLaterEnable, pushPlanPayload, pushToArray } from '../../../Redux/PlanSlice';
+import { SendPlan, TakeExecuteLaterEnable, nowDate, pushPlanPayload, pushToArray } from '../../../Redux/PlanSlice';
 
 const AcceptPlanSection = () => {
   const {executeLater} = useSelector(state => state.plan)
@@ -19,6 +19,10 @@ const AcceptPlanSection = () => {
 
   const handleChange = (event) => {
     dispatch(TakeExecuteLaterEnable())
+  };
+  const HandleSend = () => {
+    dispatch(SendPlan())
+    
   };
     return(
         <div className='fs-15 w-full'>
@@ -34,7 +38,7 @@ const AcceptPlanSection = () => {
             <ResponsiveDateTimePickers/>
             </div>
             <div style={{textAlign: "right",marginTop:20}}>
-             <a className="button bg-blue c-white btn-shape ml-10" onClick={()=>dispatch(SendPlan())}>send</a>
+             <a className="button bg-blue c-white btn-shape ml-10" onClick={HandleSend}>send</a>
              </div>
 
             </div>

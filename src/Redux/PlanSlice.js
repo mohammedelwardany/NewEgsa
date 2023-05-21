@@ -85,6 +85,9 @@ export const GetPlanByName = createAsyncThunk("api/GetPlanByName", async (_, thu
 export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => {
   const { getState } = thunkAPI;
   const planArray = getState().plan.allPlanData
+  const planTime = getState().plan.Time
+  const userId = getState().user.allUserData.id
+
   const dataf = []
   
   planArray.map(((data, i) => {
@@ -98,9 +101,9 @@ export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => 
       "commandID": data.commandId,
       "divces": data.divces,
       "inputParamter": data.inputParamter,
-      "dateTime": "2023-04-25T21:11:57.934Z",
+      "dateTime": planTime,
       "flagWatting": data.flagWatting,
-      "applicationUserid": "8fff3cf5-3c5b-44b6-aa97-1a6c96de66f1"     
+      "applicationUserid": userId
     }
 
     dataf.push(datas);
@@ -115,10 +118,13 @@ export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => 
   .then(function (response) {
     const res = response
     console.log(res);
-    
+    const AcceptedPlan = true;
+    return {res,AcceptedPlan};
   })
   .catch(function (error) {
     console.log(error);
+    const AcceptedPlan = false;
+    return {error,AcceptedPlan};
 
   });
 
@@ -148,7 +154,7 @@ export const PlanSlice = createSlice({
     planId: 0,
     executeLater: false,
     dateDesplay: "none",
-    TimeNow: "",
+    Time: "",
     planDateTime: "now",
     PlanCommendData: {
       sequenceNumber: 0,
@@ -287,16 +293,28 @@ export const PlanSlice = createSlice({
 
       state.planDateTime = action.payload.planDateTime
       state.PlanCommendData.dateTime = action.payload.planDateTime
-      console.log(state.planDateTime)
+      const dateTime = action.payload.planDateTime
+     
+      state.Time = dateTime
+      console.log(state.Time)
 
     },
     nowDate: (state) => {
-      var today = new Date();
-      var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      var dateTime = date + 'T' + time;
-      console.log(dateTime)
-      state.TimeNow = dateTime
+      // var today = new Date();
+      // var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      // var dateTime = date + 'T' + time;
+      // console.log(dateTime)
+     
+
+        ///////time manager
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var time = today.toLocaleTimeString('it-IT')
+  var dateTime = date + 'T' + time;
+  console.log(dateTime)
+   state.Time = dateTime
     },
     pushToArray: (state) => {
       const a = state.PlanCommendData
@@ -552,7 +570,10 @@ export const PlanSlice = createSlice({
       state.loading = false;
       // state.planName = action.payload[0].name
       // state.FixedPlanRdata = action.payload
-        console.log(action.payload)
+        console.log(action.payload.res)
+        if (action.payload.AcceptedPlan == true){
+          window.location.replace('http://localhost:3000/OnlineResults');         
+        }
       // console.log()
       // state.FixedPlandata = 
       // console.log(state.FixedPlandata)

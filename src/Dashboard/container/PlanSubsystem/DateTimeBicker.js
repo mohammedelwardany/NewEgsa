@@ -33,7 +33,7 @@ export default function ResponsiveDateTimePickers() {
       >
 
         <DemoItem label="Execute At" >
-          <MobileDateTimePicker defaultValue={today} onAccept={handleAccept} disablePast />
+          <MobileDateTimePicker defaultValue={today} onAccept={handleAccept} />
         </DemoItem>
 
       </DemoContainer>

@@ -1,10 +1,12 @@
-import  React from 'react';
+import  React, { useEffect } from 'react';
 import '../../css/sign.css';
 import  SignUp from './signup';
 import  SignIn from './signin';
+import { useSelector } from 'react-redux';
+import { Alert } from 'antd';
 
 const Sign = () => {
-  
+
     return(
     <div className="all">
     <div className="contain">

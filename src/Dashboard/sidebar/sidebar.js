@@ -22,6 +22,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Headersystem from '../container/header/header';
 import { useEffect } from 'react';
 import NotificationSystem from '../notification';
+import { useDispatch } from 'react-redux';
+import { GetUserData } from '../../Redux/UserSlice';
 
 const { Header, Content, Footer, Sider } = Layout;
   const sidebarNav =
@@ -177,14 +179,17 @@ const Sidebar = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
     useEffect(() => {
-    console.log('Location changed!', `.${location.pathname}`);
+    // console.log('Location changed!', `.${location.pathname}`);
     // return () => {
     //   second
     // }
-  }, [location])
+    dispatch(GetUserData())
+  }, [])
   
   return (
     <Layout hasSider>
