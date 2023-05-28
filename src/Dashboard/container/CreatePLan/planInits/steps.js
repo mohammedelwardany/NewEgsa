@@ -14,53 +14,53 @@ import { GeneralFunction, GetPlanByIdModal } from '../generalModalElements';
 import { useDispatch } from 'react-redux';
 import { GetPlanById, GetPlannData, TakePlanName } from '../../../../Redux/PlanSlice';
 
-function GetPlanBy(){
+function GetPlanBy() {
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch(GetPlannData());
-    
+
 
     }, [dispatch])
-    
-    return(
+
+    return (
         <>
-        <FixedPlansPanel/>
-        <div>
-          <p  style={{display:"flex",flexDirection:"row",textAlign:'center'}}>you can also 
-          &nbsp;
-          <CPGeneralModal  
-        type={'id'}
-        buttonV={'none'}
-        IconButtonV={'none'}
-        ElementTitle={' get plan by id '}
-        // ElementFontColor={"blue"}
-        modalElements={<GeneralFunction
-        formLabel={'plan id'}
-        placeholder={0}
-        type={'id'}
-        />}
-        modalTitle={'get plan by id'}
-        />
-        &nbsp;
-         or 
-        &nbsp;
-        <CPGeneralModal  
-        type={'name'}
-        buttonV={'none'}
-        IconButtonV={'none'}
-        ElementTitle={' get plan by name '}
-        // ElementFontColor={"blue"}
-        modalElements={<GeneralFunction
-        formLabel={'plan name'}
-        placeholder={'plan'}
-        type={'name'}
-        />}
-        modalTitle={'get plan by id'}
-        />
-        
-        </p>  
-        </div>
-        
+            <FixedPlansPanel />
+            <div>
+                <p style={{ display: "flex", flexDirection: "row", textAlign: 'center' }}>you can also
+                    &nbsp;
+                    <CPGeneralModal
+                        type={'id'}
+                        buttonV={'none'}
+                        IconButtonV={'none'}
+                        ElementTitle={' get plan by id '}
+                        // ElementFontColor={"blue"}
+                        modalElements={<GeneralFunction
+                            formLabel={'plan id'}
+                            placeholder={0}
+                            type={'id'}
+                        />}
+                        modalTitle={'get plan by id'}
+                    />
+                    &nbsp;
+                    or
+                    &nbsp;
+                    <CPGeneralModal
+                        type={'name'}
+                        buttonV={'none'}
+                        IconButtonV={'none'}
+                        ElementTitle={' get plan by name '}
+                        // ElementFontColor={"blue"}
+                        modalElements={<GeneralFunction
+                            formLabel={'plan name'}
+                            placeholder={'plan'}
+                            type={'name'}
+                        />}
+                        modalTitle={'get plan by id'}
+                    />
+
+                </p>
+            </div>
+
         </>
     )
 }
@@ -73,17 +73,17 @@ const steps = [
     ,
     {
         subject: 'Select Fixed Plan',
-        selement: <GetPlanBy/>
+        selement: <GetPlanBy />
     }
     , {
         subject: 'Set Plan Name',
-        selement: <PlanSetName/>
+        selement: <PlanSetName />
     }
 
 
 ];
 
-export default function CPSteps({modalClosee}) {
+export default function CPSteps({ modalClosee }) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = React.useState({});
     const navigate = useNavigate();
@@ -126,7 +126,7 @@ export default function CPSteps({modalClosee}) {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
         handleNext();
-        
+
     };
 
     const interupt = () => {
@@ -136,7 +136,7 @@ export default function CPSteps({modalClosee}) {
     const handleReset = () => {
         // setActiveStep(0);
         // setCompleted({});
-        {modalClosee()}
+        { modalClosee() }
     };
 
     return (
@@ -196,7 +196,7 @@ export default function CPSteps({modalClosee}) {
                             {activeStep !== steps.length &&
                                 (
                                     <Button onClick={handleComplete}>
-                                         next
+                                        next
                                     </Button>
                                 )}
                         </Box>

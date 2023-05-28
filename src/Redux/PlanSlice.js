@@ -85,6 +85,7 @@ export const GetPlanByName = createAsyncThunk("api/GetPlanByName", async (_, thu
 export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => {
   const { getState } = thunkAPI;
   const planArray = getState().plan.allPlanData
+  const planName = getState().plan.planName
   const planTime = getState().plan.Time
   const userId = getState().user.allUserData.id
 
@@ -92,17 +93,17 @@ export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => 
   
   planArray.map(((data, i) => {
     const datas = {
-      "name": data.name,
+      "name": planName.toString(),
       "sequenceNumber": data.sequenceNumber,
       "delay": data.delay,
       "repeat": data.repeat,
-      "acknowledgeId": data.acknowledgeId,
+      "acknowledgeId": 1,
       "subSystemId": data.subSystemId,
       "commandID": data.commandId,
-      "divces": data.divces,
+      "divces": null,
       "inputParamter": data.inputParamter,
-      "dateTime": planTime,
-      "flagWatting": data.flagWatting,
+      "dateTime": "2023-06-19T09:30:40.415Z",
+      "flagWatting": true,
       "applicationUserid": userId
     }
 
@@ -110,10 +111,11 @@ export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => 
   }))
 
   console.log(dataf)
-
-  const res = await axios.post('https://localhost:7152/api/Plan/saveallplan?flag=1',dataf,{
+// const res = dataf;
+  const res = await axios.post('https://localhost:7152/api/Plan/saveallplan?flag=0',dataf,{
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      // 'flag':0
     }})
   .then(function (response) {
     const res = response
@@ -229,6 +231,7 @@ export const PlanSlice = createSlice({
     TakePlanName: (state, action) => {
 
       state.planName = action.payload.planName
+
       console.log("name")
       console.log(state.planName)
     },
@@ -570,7 +573,7 @@ export const PlanSlice = createSlice({
       state.loading = false;
       // state.planName = action.payload[0].name
       // state.FixedPlanRdata = action.payload
-        console.log(action.payload.res)
+        console.log(action.payload)
         if (action.payload.AcceptedPlan == true){
           window.location.replace('http://localhost:3000/OnlineResults');         
         }

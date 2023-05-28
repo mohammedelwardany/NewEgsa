@@ -29,8 +29,8 @@ const SignIn = () => {
                 <i className="fas fa-lock"></i>
                 <input type="password" name='password' placeholder="Enter your password" required/>
               </div>
-              <div className="text" style={{color:"red"}}>{error}</div>
               <div className="text"><a href="#">Forgot password?</a></div>
+              <div className="text" style={{color:"red"}}>{error}</div>
               <div className="button input-box">
                 <input type="submit" value="Sumbit" />
               </div>

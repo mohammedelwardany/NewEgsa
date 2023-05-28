@@ -5,7 +5,7 @@ import '../../css/normalize.css';
 import LoadingPtn from './LoadingPtn';
 import { DownloadOutlined, UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-
+// import logo from "../../../public/imgs/logoblue.png"
 
 
 // <Route path='/' element={<Landing/>}/>
@@ -21,11 +21,13 @@ const Header = () => {
   return (
     <div className="header" id="header">
       <div className="container">
-        <a href="#" className="logo">Logo</a>
+        <a href="#" className="logo">
+        <img src="imgs/logoblue.png" style={{width:"20vh"}} alt="" />
+          </a>
         <ul className="main-nav">
           <li><Link to={"/"}>Home</Link></li>
           <li><Link to={"/about"}>About</Link></li>
-          <li><Link to={"/services"}>About</Link></li>
+          <li><Link to={"/services"}>Services</Link></li>
           <li> <Link to={"/articles"}>News</Link></li>
           <li style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
             <Button type="primary" shape="round" onClick={()=>{navigate("/sign")}} icon={<UserOutlined />} size={"large"}>

@@ -7,8 +7,10 @@ const Footer = () => {
     return(
 <div className="footer">
       <div className="container">
-        <div className="box">
-          <h3>SPACE ROVER</h3>
+        <div className="box" >
+          {/* <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}> */}
+          <img src='imgs/logoWhite.png' style={{width:"25vh" ,margin:"1vh"}}/>
+          {/* </div> */}
           <ul className="social">
             <li>
               <a href="#" className="facebook">

@@ -204,7 +204,8 @@ const Sidebar = () => {
           bottom: 0,
         }}
       >
-        <div className="demo-logo-vertical" />
+        
+        <img src='imgs/logoWhite.png' style={{width:"25vh" ,margin:"auto" , paddingInline:"4vh",marginBlock:"5vh"}}/>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={"/system"} selectedKeys={location.pathname} items={Navigation} onSelect={(e)=>{navigate(e.item.props.link)}}/>
       </Sider>
       <Layout

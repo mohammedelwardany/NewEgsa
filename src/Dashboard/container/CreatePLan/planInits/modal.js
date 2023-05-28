@@ -5,8 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import EditIcon from '@mui/icons-material/Edit';
 import CPSteps from './steps';
-import PlanSetName from '../../PlanSubsystem/planSetName';
-import FixedPlansPanel from '../../PlanSubsystem/FixedPlanPanel';
+
 import { useEffect } from 'react';
 
 const style = {
