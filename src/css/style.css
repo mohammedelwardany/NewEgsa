@@ -128,7 +128,25 @@ input[type="file"] {
   line-height: 27px;
   padding-left: 10px;
 }
-
+.postImgContainer{
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  margin-inline: auto;
+}
+.postImg{
+  width: 100%;
+  /* object-fit:cover ;
+  object-position: 30%; */
+  /* contain: content; */
+}
+.postpadding{
+padding-inline: 15vh;
+}
+.postpaddinginside{
+  /* padding-inline: 5vh; */
+  padding-block: 3vh ;
+  }
 .createPost .input .post:hover {
   background: var(--white3);
 }

@@ -1,155 +1,144 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 
-import { useDispatch } from 'react-redux'
-import { json, Navigate, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { useDispatch } from "react-redux";
+import { json, Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 //start
 //success
 //error
 
-export const GetPlannData = createAsyncThunk("api/data", async (_, thunkAPI) => {
-  const resss = await axios.get('https://localhost:7152/api/Plan/GetAllSubsystem_Commands')
-    .then(function (response) {
-      const res = response.data
-      // console.log(res);
-      return res;
-    })
-    .catch(function (error) {
-      // console.log(error);
-      return error;
+export const GetPlannData = createAsyncThunk(
+  "api/data",
+  async (_, thunkAPI) => {
+    const resss = await axios
+      .get("https://localhost:7152/api/Plan/GetAllSubsystem_Commands")
+      .then(function (response) {
+        const res = response.data;
+        // console.log(res);
+        return res;
+      })
+      .catch(function (error) {
+        // console.log(error);
+        return error;
+      });
+    return resss;
+  }
+);
+
+export const GetFixedPlannData = createAsyncThunk(
+  "api/fixedPlan",
+  async (_, thunkAPI) => {
+    const resss = await axios
+      .get("https://localhost:7152/api/Plan/GetFixedPlans?num=15")
+      .then(function (response) {
+        const res = response.data;
+        // console.log(res);
+        return res;
+      })
+      .catch(function (error) {
+        // console.log(error);
+        return error;
+      });
+    return resss;
+  }
+);
+
+export const GetPlanById = createAsyncThunk(
+  "api/GetPlanById",
+  async (_, thunkAPI) => {
+    const { getState } = thunkAPI;
+    const PlanId = getState().plan.planId;
+    const res = await axios
+      .get(`https://localhost:7152/api/Plan/Return plan?id=${PlanId}`)
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return res;
+  }
+);
+
+export const GetPlanByName = createAsyncThunk(
+  "api/GetPlanByName",
+  async (_, thunkAPI) => {
+    const { getState } = thunkAPI;
+
+    const flag = 1;
+    const applicationUserid = "8fff3cf5-3c5b-44b6-aa97-1a6c96de66f1";
+    const PlanName = getState().plan.planName;
+    const res = await axios
+      .get(`https://localhost:7152/api/Plan/GetPlanByName?name=${PlanName}`)
+      .then(function (response) {
+        return response.data.plan;
+        // console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    return res;
+  }
+);
+
+export const SendPlan = createAsyncThunk(
+  "api/SendPlan",
+  async (_, thunkAPI) => {
+    const { getState } = thunkAPI;
+    const planArray = getState().plan.allPlanData;
+    const planName = getState().plan.planName;
+    const planTime = getState().plan.Time;
+    const userId = getState().user.allUserData.id;
+
+    const dataf = [];
+
+    planArray.map((data, i) => {
+      const datas = {
+        name: planName.toString(),
+        sequenceNumber: data.sequenceNumber,
+        delay: data.delay,
+        repeat: data.repeat,
+        acknowledgeId: 1,
+        subSystemId: data.subSystemId,
+        commandID: data.commandId,
+        divces: null,
+        inputParamter: data.inputParamter,
+        dateTime: "2023-07-19T09:30:40.415Z",
+        flagWatting: true,
+        applicationUserid: userId,
+      };
+
+      dataf.push(datas);
     });
-  return resss;
-})
 
+    console.log(dataf);
+    // const res = dataf;
+    const res = await axios
+      .post("https://localhost:7152/api/Plan/saveallplan?flag=1", dataf, {
+        headers: {
+          "Content-Type": "application/json",
+          // 'flag':0
+        },
+      })
+      .then(function (response) {
+        const res = response;
+        console.log(res);
+        const AcceptedPlan = true;
+        return { res, AcceptedPlan };
+      })
+      .catch(function (error) {
+        console.log(error);
+        const AcceptedPlan = false;
+        return { error, AcceptedPlan };
+      });
 
-export const GetFixedPlannData = createAsyncThunk("api/fixedPlan", async (_, thunkAPI) => {
-  const resss = await axios.get('https://localhost:7152/api/Plan/GetFixedPlans?num=15')
-    .then(function (response) {
-      const res = response.data
-      // console.log(res);
-      return res;
-    })
-    .catch(function (error) {
-      // console.log(error);
-      return error;
-    });
-  return resss;
-})
-
-
-
-export const GetPlanById = createAsyncThunk("api/GetPlanById", async (_, thunkAPI) => {
-  const { getState } = thunkAPI;
-  const PlanId = getState().plan.planId
-  const res = await axios.get(`https://localhost:7152/api/Plan/Return plan?id=${PlanId}`)
-    .then(function (response) {
-      return response.data
-
-    })
-    .catch(function (error) {
-      console.log(error);
-
-    });
-  return res;
-
-
-
-})
-
-
-export const GetPlanByName = createAsyncThunk("api/GetPlanByName", async (_, thunkAPI) => {
-  const { getState } = thunkAPI;
-
-  const flag = 1;
-  const applicationUserid = "8fff3cf5-3c5b-44b6-aa97-1a6c96de66f1"
-  const PlanName = getState().plan.planName
-  const res = await axios.get(`https://localhost:7152/api/Plan/GetPlanByName?name=${PlanName}`)
-    .then(function (response) {
-      return response.data.plan;
-      // console.log(res);
-    })
-    .catch(function (error) {
-      console.log(error);
-
-    });
-
-  return res;
-
-
-
-})
-
-
-
-
-export const SendPlan = createAsyncThunk("api/SendPlan", async (_, thunkAPI) => {
-  const { getState } = thunkAPI;
-  const planArray = getState().plan.allPlanData
-  const planName = getState().plan.planName
-  const planTime = getState().plan.Time
-  const userId = getState().user.allUserData.id
-
-  const dataf = []
-  
-  planArray.map(((data, i) => {
-    const datas = {
-      "name": planName.toString(),
-      "sequenceNumber": data.sequenceNumber,
-      "delay": data.delay,
-      "repeat": data.repeat,
-      "acknowledgeId": 1,
-      "subSystemId": data.subSystemId,
-      "commandID": data.commandId,
-      "divces": null,
-      "inputParamter": data.inputParamter,
-      "dateTime": "2023-06-19T09:30:40.415Z",
-      "flagWatting": true,
-      "applicationUserid": userId
-    }
-
-    dataf.push(datas);
-  }))
-
-  console.log(dataf)
-// const res = dataf;
-  const res = await axios.post('https://localhost:7152/api/Plan/saveallplan?flag=0',dataf,{
-    headers: {
-      'Content-Type': 'application/json',
-      // 'flag':0
-    }})
-  .then(function (response) {
-    const res = response
-    console.log(res);
-    const AcceptedPlan = true;
-    return {res,AcceptedPlan};
-  })
-  .catch(function (error) {
-    console.log(error);
-    const AcceptedPlan = false;
-    return {error,AcceptedPlan};
-
-  });
-
-  return res;
-
-
-
-})
-
-
-
-
-
-
-
-
-
-
-            
-
+    return res;
+  }
+);
 
 export const PlanSlice = createSlice({
-  name: 'api',
+  name: "api",
   initialState: {
     planName: "",
     planNameSetted: false,
@@ -170,7 +159,7 @@ export const PlanSlice = createSlice({
       divces: 0,
       inputParamter: 0,
       dateTime: "",
-      flagWatting: true
+      flagWatting: true,
     },
     subsystemCommendsdata: [
       {
@@ -179,15 +168,17 @@ export const PlanSlice = createSlice({
         commands: [
           {
             id: 0,
-            description: ""
-          }
-        ]
-      }],
+            description: "",
+          },
+        ],
+      },
+    ],
     FixedPlandata: [
       {
         name: "",
-        id: 0
-      },],
+        id: 0,
+      },
+    ],
     FixedPlanRdata: [
       {
         name: "",
@@ -203,14 +194,15 @@ export const PlanSlice = createSlice({
         inputParamter: 0,
         dateTime: "",
         flagWatting: false,
-        applicationUser: null
-      },],
+        applicationUser: null,
+      },
+    ],
     allPlanData: [],
     accepted: false,
     loading: false,
     error: false,
     arrange: 0,
-    arrangeFlag: "replace"
+    arrangeFlag: "replace",
   },
   reducers: {
     // RegisterData: (state,action) => {
@@ -224,83 +216,67 @@ export const PlanSlice = createSlice({
     // },
 
     GetPlanData: (state) => {
-
-      console.log(GetPlannData())
-
+      console.log(GetPlannData());
     },
     TakePlanName: (state, action) => {
+      state.planName = action.payload.planName;
 
-      state.planName = action.payload.planName
-
-      console.log("name")
-      console.log(state.planName)
+      console.log("name");
+      console.log(state.planName);
     },
     TakePlanId: (state, action) => {
-
-      state.planId = action.payload.planId
-      console.log(state.planId)
-
+      state.planId = action.payload.planId;
+      console.log(state.planId);
     },
     TakeArrange: (state, action) => {
-
-      state.arrange = action.payload.arrange - 1
+      state.arrange = action.payload.arrange - 1;
       // console.log("name")
       // console.log(state.planName)
     },
     FormDataForPlan: (state, action) => {
-
       // state.planName = action.payload.planName
       // console.log("name")
       // console.log(state.planName)
     },
     TakeRepeat: (state, action) => {
-
       state.PlanCommendData.repeat = action.payload.repeat;
-      console.log("repeat")
-      console.log(state.PlanCommendData.repeat)
-
+      console.log("repeat");
+      console.log(state.PlanCommendData.repeat);
     },
     TakeDelay: (state, action) => {
-
       state.PlanCommendData.delay = action.payload.delay;
-      console.log("delay")
-      console.log(state.PlanCommendData.delay)
+      console.log("delay");
+      console.log(state.PlanCommendData.delay);
     },
     TakeSubsystemItem: (state, action) => {
-
       state.PlanCommendData.subSystemId = action.payload.subSystemId;
       state.PlanCommendData.subSystemName = action.payload.subSystemName;
-
     },
     TakeCommendItem: (state, action) => {
-
       state.PlanCommendData.commandID = action.payload.commandID;
-      state.PlanCommendData.CommendDescription = action.payload.CommendDescription;
-
+      state.PlanCommendData.CommendDescription =
+        action.payload.CommendDescription;
     },
     TakeExecuteLaterEnable: (state) => {
       if (state.executeLater == false) {
-        state.executeLater = true
-        state.dateDesplay = "block"
-        console.log(state.executeLater)
-      }
-      else {
-        state.executeLater = false
-        state.dateDesplay = "none"
-        state.planDateTime = "now"
-        state.PlanCommendData.dateTime = "now"
-        console.log(state.executeLater)
+        state.executeLater = true;
+        state.dateDesplay = "block";
+        console.log(state.executeLater);
+      } else {
+        state.executeLater = false;
+        state.dateDesplay = "none";
+        state.planDateTime = "now";
+        state.PlanCommendData.dateTime = "now";
+        console.log(state.executeLater);
       }
     },
     TakeTimeLater: (state, action) => {
+      state.planDateTime = action.payload.planDateTime;
+      state.PlanCommendData.dateTime = action.payload.planDateTime;
+      const dateTime = action.payload.planDateTime;
 
-      state.planDateTime = action.payload.planDateTime
-      state.PlanCommendData.dateTime = action.payload.planDateTime
-      const dateTime = action.payload.planDateTime
-     
-      state.Time = dateTime
-      console.log(state.Time)
-
+      state.Time = dateTime;
+      console.log(state.Time);
     },
     nowDate: (state) => {
       // var today = new Date();
@@ -308,98 +284,83 @@ export const PlanSlice = createSlice({
       // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       // var dateTime = date + 'T' + time;
       // console.log(dateTime)
-     
 
-        ///////time manager
-  var today = new Date();
-  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var time = today.toLocaleTimeString('it-IT')
-  var dateTime = date + 'T' + time;
-  console.log(dateTime)
-   state.Time = dateTime
+      ///////time manager
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var time = today.toLocaleTimeString("it-IT");
+      var dateTime = date + "T" + time;
+      console.log(dateTime);
+      state.Time = dateTime;
     },
     pushToArray: (state) => {
-      const a = state.PlanCommendData
-      console.log(current(a))
-      state.allPlanData.push(a)
-      console.log(current(state.allPlanData))
-      a.sequenceNumber = a.sequenceNumber + 1
+      const a = state.PlanCommendData;
+      console.log(current(a));
+      state.allPlanData.push(a);
+      console.log(current(state.allPlanData));
+      a.sequenceNumber = state.allPlanData.length ;
     },
     pushPlanPayload: (state) => {
-      const allData = state.allPlanData
-      console.log(current(allData))
-
+      const allData = state.allPlanData;
+      console.log(current(allData));
     },
     replace2elements: (state) => {
-      state.allPlanData = []
-
-
+      state.allPlanData = [];
     },
 
     replacement: (state, action) => {
-
-      if (state.arrangeFlag == 'replace') {
-
+      if (state.arrangeFlag == "replace") {
         // // const array=[...current(state.allPlanData)]
         let temp = state.allPlanData[action.payload.fromIndex];
-        state.allPlanData[action.payload.fromIndex] = state.allPlanData[state.arrange];
+        state.allPlanData[action.payload.fromIndex] =
+          state.allPlanData[state.arrange];
         state.allPlanData[state.arrange] = temp;
-
-
-
       }
-      if (state.arrangeFlag == 'take') {
-        state.allPlanData.splice(state.arrange, 0, state.allPlanData[action.payload.fromIndex])
-        state.allPlanData.splice(action.payload.fromIndex + 1, 1)
-
-
-
+      if (state.arrangeFlag == "take") {
+        state.allPlanData.splice(
+          state.arrange,
+          0,
+          state.allPlanData[action.payload.fromIndex]
+        );
+        state.allPlanData.splice(action.payload.fromIndex + 1, 1);
       }
-      const array = state.allPlanData
-      array.map(((data, i) => {
-        state.allPlanData[i].sequenceNumber = i + 1
-      }))
-
+      const array = state.allPlanData;
+      array.map((data, i) => {
+        state.allPlanData[i].sequenceNumber = i + 1;
+      });
     },
 
     replacmentFlag: (state, action) => {
-
-
-      state.arrangeFlag = action.payload.replacmentFlag
-      console.log(state.arrangeFlag)
-
+      state.arrangeFlag = action.payload.replacmentFlag;
+      console.log(state.arrangeFlag);
     },
 
-
     deleteFrom: (state, action) => {
+      state.allPlanData.splice(action.payload.fromIndex, 1);
 
-
-
-      state.allPlanData.splice(action.payload.fromIndex, 1)
-
-
-      const array = state.allPlanData
-      array.map(((data, i) => {
-        state.allPlanData[i].sequenceNumber = i + 1
-      }))
-
-
+      const array = state.allPlanData;
+      array.map((data, i) => {
+        state.allPlanData[i].sequenceNumber = i + 1;
+      });
     },
 
     GetPlanTypeData: (state) => {
-
-      axios.get('https://localhost:7152/api/Plan/GetTypeofeachCommand')
+      axios
+        .get("https://localhost:7152/api/Plan/GetTypeofeachCommand")
         .then(function (response) {
-          const res = response.data
+          const res = response.data;
           console.log(res);
-          state.subsystemCommendsdata = 3
+          state.subsystemCommendsdata = 3;
         })
         .catch(function (error) {
           console.log(error);
-
         });
-
     },
 
     // GetPlanById: (state) => {
@@ -463,7 +424,6 @@ export const PlanSlice = createSlice({
     //     });
 
     //   },
-
   },
   extraReducers: {
     [GetPlannData.pending]: (state) => {
@@ -471,7 +431,7 @@ export const PlanSlice = createSlice({
     },
     [GetPlannData.fulfilled]: (state, action) => {
       state.loading = false;
-      state.subsystemCommendsdata = action.payload
+      state.subsystemCommendsdata = action.payload;
       // state.subsystemCommendsdata=GetPlannData()
     },
     [GetPlannData.rejected]: (state) => {
@@ -484,8 +444,8 @@ export const PlanSlice = createSlice({
     },
     [GetFixedPlannData.fulfilled]: (state, action) => {
       state.loading = false;
-      state.FixedPlandata = action.payload
-      console.log(state.FixedPlandata)
+      state.FixedPlandata = action.payload;
+      console.log(state.FixedPlandata);
       // console.log(state.FixedPlandata)
       // state.subsystemCommendsdata=GetPlannData()
     },
@@ -499,11 +459,11 @@ export const PlanSlice = createSlice({
     },
     [GetPlanById.fulfilled]: (state, action) => {
       state.loading = false;
-      state.planName = action.payload[0].name
-      state.FixedPlanRdata = action.payload
+      state.planName = action.payload[0].name;
+      state.FixedPlanRdata = action.payload;
 
       // console.log()
-      // state.FixedPlandata = 
+      // state.FixedPlandata =
       // console.log(state.FixedPlandata)
       // console.log(state.FixedPlandata)
       // state.subsystemCommendsdata=GetPlannData()
@@ -513,24 +473,20 @@ export const PlanSlice = createSlice({
       state.error = true;
     },
 
-
-
     [GetPlanByName.pending]: (state) => {
       state.loading = true;
     },
     [GetPlanByName.fulfilled]: (state, action) => {
       state.loading = false;
       // state.planName = action.payload[0].name
-      state.FixedPlanRdata = action.payload
+      state.FixedPlanRdata = action.payload;
 
+      const restalk = state.FixedPlanRdata;
+      const lol = current(state.subsystemCommendsdata);
 
-      const restalk = state.FixedPlanRdata
-      const lol = current(state.subsystemCommendsdata)
-
-      console.log(lol)
-      restalk.map(((data, i) => {
-
-        console.log(lol[0].commands[0].description)
+      console.log(lol);
+      restalk.map((data, i) => {
+        console.log(lol[0].commands[0].description);
 
         const FormatDataChunk = {
           name: data.name,
@@ -541,22 +497,20 @@ export const PlanSlice = createSlice({
           subSystemId: data.subSystemId,
           subSystemName: lol[data.subSystemId].subSystemName,
           commandId: data.commandId,
-          CommendDescription: lol[data.subSystemId].commands[data.commandId].description,
+          CommendDescription:
+            lol[data.subSystemId].commands[data.commandId].description,
           divces: data.divces,
           inputParamter: data.inputParamter,
           dateTime: data.dateTime,
           flagWatting: data.flagWatting,
-          applicationUser: data.applicationUserid
-        }
+          applicationUser: data.applicationUserid,
+        };
 
-        state.allPlanData.push(FormatDataChunk)
-        console.log(current(state.allPlanData))
-
-
-
-      }))
+        state.allPlanData.push(FormatDataChunk);
+        console.log(current(state.allPlanData));
+      });
       // console.log()
-      // state.FixedPlandata = 
+      // state.FixedPlandata =
       // console.log(state.FixedPlanRdata)
 
       // console.log(state.FixedPlandata)
@@ -573,12 +527,12 @@ export const PlanSlice = createSlice({
       state.loading = false;
       // state.planName = action.payload[0].name
       // state.FixedPlanRdata = action.payload
-        console.log(action.payload)
-        if (action.payload.AcceptedPlan == true){
-          window.location.replace('http://localhost:3000/OnlineResults');         
-        }
+      console.log(action.payload);
+      if (action.payload.AcceptedPlan == true) {
+        window.location.replace("http://localhost:3000/OnlineResults");
+      }
       // console.log()
-      // state.FixedPlandata = 
+      // state.FixedPlandata =
       // console.log(state.FixedPlandata)
       // console.log(state.FixedPlandata)
       // state.subsystemCommendsdata=GetPlannData()
@@ -587,16 +541,31 @@ export const PlanSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
-
-  }
+  },
   // SendPlan
-
-  
-}
-
-)
+});
 // GetPlanById
 // Action cREators are generated for each case reducer function
-export const { replacmentFlag, replacement, replace2elements, TakePlace, deleteFrom, pushPlanPayload, pushToArray, TakeExecuteLaterEnable, TakeTimeLater, TakeRepeat, TakeDelay, TakePlanName, TakePlanId, TakeArrange, TakeSubsystemItem, TakeCommendItem, nowDate, GetPlanData, GetPlanTypeData } = PlanSlice.actions
+export const {
+  replacmentFlag,
+  replacement,
+  replace2elements,
+  TakePlace,
+  deleteFrom,
+  pushPlanPayload,
+  pushToArray,
+  TakeExecuteLaterEnable,
+  TakeTimeLater,
+  TakeRepeat,
+  TakeDelay,
+  TakePlanName,
+  TakePlanId,
+  TakeArrange,
+  TakeSubsystemItem,
+  TakeCommendItem,
+  nowDate,
+  GetPlanData,
+  GetPlanTypeData,
+} = PlanSlice.actions;
 
-export default PlanSlice.reducer
+export default PlanSlice.reducer;

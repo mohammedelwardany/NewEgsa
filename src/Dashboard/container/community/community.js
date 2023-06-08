@@ -11,7 +11,7 @@ import { GetPosts, SendPost, TakeFile, TakePage, TakePostContent } from '../../.
 
 
 const Community = () => {
-    // const [page, setPage] = React.useState(1);
+    const [image, setImage] = React.useState("");
     const { page } = useSelector(state=>state.blog)
     const handleChange = (event, value) => {
         // setPage(value);
@@ -26,17 +26,27 @@ const Community = () => {
     
     }, [dispatch])
     
-   
+   const handleSend = (e) =>{
+    //    const imagePart = "@"+image.name+";type="+image.type
+    e.preventDefault()
+    //    console.log(e.target.elements.imagee.files[0])
+       
+
+    dispatch(SendPost({imagee:e.target.elements.imagee.files[0]}))
+    setTimeout(()=>{window.location.reload();},3000)
+    
+   }
     return(
-        <div className="content w-full">
+        <div className="content w-full postpadding">
             <div className="community d-grid gap-20">
+            <form onSubmit={handleSend}>
          
             <div className="createPost bs">
             <div className="input">
                 <div >
                 <img className="globalRoundProfile" src="imgs/2.jpg" alt=""/>  
                 </div>
-                <InputEmoji className="post " onChange={(e)=>dispatch(TakePostContent({postContent:e}))} placeholder="What's on your mind?" />
+                <InputEmoji  className="post" onChange={(e)=>dispatch(TakePostContent({postContent:e}))} placeholder="What's on your mind?" />
             </div>
 
             <div className="buttons">
@@ -46,7 +56,7 @@ const Community = () => {
                     </div>
                         <label for="upload-image" className="post-actions__label">
                             <h4>Photo/Video</h4>
-                            <input type="file" id="upload-image" accept="image/*" onChange={(e)=>dispatch(TakeFile({fileAccess:e.target.files[0]}))} />
+                            <input type="file" id="upload-image" name='imagee' accept="image/*" onChange={(e)=>setImage(e)} />
                         </label>  
                 </span>
 
@@ -55,11 +65,12 @@ const Community = () => {
                         <img src="imgs/smile.svg" alt=""/>
                     </div>
                     <h4>Feeling/Activity</h4>
+                    {/* ()=>{dispatch(SendPost());dispatch(GetPosts())} */}
                 </span>
-                <button className="visit d-block fs-14 bg-blue c-white w-fit btn-shape" style={{cursor : 'pointer',width: '110px',textAlign: 'center',borderColor:"transparent"}}   onClick={()=>{dispatch(SendPost());dispatch(GetPosts())}}>Publish</button>
+                <button type='submit' className="visit d-block fs-14 bg-blue c-white w-fit btn-shape" style={{cursor : 'pointer',width: '110px',textAlign: 'center',borderColor:"transparent"}}  >Publish</button>
             </div>
         </div>
-
+</form>
        <CreatePost/>
 
         
