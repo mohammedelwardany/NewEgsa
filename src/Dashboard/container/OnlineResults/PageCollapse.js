@@ -11,6 +11,7 @@ import ChartHandles from '../playBack/ChartHandles';
 import MainResults from '../playBack/MainResultsTable';
 import TableResults from './TableResults';
 import ChartResult from './chartsResult';
+import { useSelector } from 'react-redux';
 const { Panel } = Collapse;
 const text = `
   A dog is a type of domesticated animal.
@@ -19,6 +20,7 @@ const text = `
 `;
 
 const PageCollapse = () => {
+      const { sensorsData } = useSelector((state) => state.online);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
@@ -145,12 +147,12 @@ const PageCollapse = () => {
                             <Col xs={2} sm={2} md={2} lg={2} xl={2}>
                                 <i class="bi bi-thermometer-sun"></i>
                                 &nbsp;
-                                12°C
+                                {sensorsData.Temperature}°C
                             </Col>
                             <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                 <i class="bi bi-droplet-half"></i>
                                 &nbsp;
-                                12
+                                {sensorsData.Humidity}
                             </Col>
                         </Row>
                     </>} key="1">
@@ -321,7 +323,7 @@ const PageCollapse = () => {
                                 <i class="bi bi-arrow-right"></i>
 
                                 &nbsp;
-                                123m
+                                {sensorsData.Ultrasonic}cm
                             </Col>
                         </Row>
                     </>} key="2">
@@ -433,11 +435,11 @@ const PageCollapse = () => {
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>MPU6050</Col>
                             <Col xs={1} sm={1} md={1} lg={1} xl={1}></Col>
                             <Col xs={5} sm={5} md={5} lg={5} xl={5}>
-                                x : 12 &nbsp; y : 34 &nbsp; z : 32
+                                x : {sensorsData.Acceleration.x} &nbsp; y : {sensorsData.Acceleration.y} &nbsp; z : {sensorsData.Acceleration.z}
                             </Col>
                             <Col xs={5} sm={5} md={5} lg={5} xl={5}>
                                 <i class="bi bi-arrow-repeat"></i>&nbsp;
-                                xy : 12° &nbsp; yz : 34° &nbsp; xz : 32°
+                                xy : {sensorsData.Gyroscope.xy}° &nbsp; yz : {sensorsData.Gyroscope.yz}° &nbsp; xz : {sensorsData.Gyroscope.xz}°
                             </Col>
                             <Col xs={1} sm={1} md={1} lg={1} xl={1}>
 

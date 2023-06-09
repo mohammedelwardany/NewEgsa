@@ -1,7 +1,27 @@
 import { Button, Col, Descriptions, Row } from 'antd';
 import RVRModal from './RoverControlModal';
 import PBModal from '../playBack/PlayBackStepsModel';
-const PlanDiscripe = ({extraaa}) => (
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { TakeRoverMessage } from '../../../Redux/onlineSlice';
+const PlanDiscripe = ({extraaa}) => {
+  const { sensorsData } = useSelector((state) => state.online);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch(TakeRoverMessage());
+    }, 1000);
+
+    // Clean up the timer on unmount
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
+
+
+
+  
+  
+  return(
   <div style={{minWidth:"100%",maxWidth:"100%"}}>
     <div >
 
@@ -35,12 +55,12 @@ const PlanDiscripe = ({extraaa}) => (
                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                 <i class="bi bi-thermometer-sun"></i>
                                 &nbsp;
-                                12°C
+                                {sensorsData.Temperature}°C
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                 <i class="bi bi-droplet-half"></i>
                                 &nbsp;
-                                12
+                                {sensorsData.Humidity}
                             </Col>
                         </Row>
                         <br></br>
@@ -54,21 +74,21 @@ const PlanDiscripe = ({extraaa}) => (
                                 <i class="bi bi-arrow-right"></i>
 
                                 &nbsp;
-                                123cm
+                                {sensorsData.Ultrasonic}cm
                             </Col>
                         </Row>
 <br></br>
                         <Row>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>MPU6050</Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                <div>x : 12</div>
-                                <div>y : 34</div>
-                                <div>z : 32</div>
+                                <div>x : {sensorsData.Acceleration.x}</div>
+                                <div>y : {sensorsData.Acceleration.y}</div>
+                                <div>z : {sensorsData.Acceleration.z}</div>
                             </Col>
                             <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                <div>xy : 12°</div>
-                                <div>yz : 34°</div>
-                                <div>xz : 32°</div>
+                                <div>xy : {sensorsData.Gyroscope.xy}°</div>
+                                <div>yz : {sensorsData.Gyroscope.yz}°</div>
+                                <div>xz : {sensorsData.Gyroscope.xz}°</div>
                             </Col>
 
                             
@@ -77,5 +97,5 @@ const PlanDiscripe = ({extraaa}) => (
 
   </div>
   </div>
-);
+)};
 export default PlanDiscripe;

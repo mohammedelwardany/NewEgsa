@@ -7,7 +7,7 @@ const Start = () => {
     return(
        
         <div className="landing">
-        <div className="container">
+        <div className="container" >
           <div className="text">
             <h1>Welcome to space World</h1>
             <p>Join with us in our journey with space rover.</p>
